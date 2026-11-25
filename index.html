@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="theme-color" content="#05070c" />
+    <title>PICO WALKER — a estação não está vazia</title>
+    <link rel="stylesheet" href="./styles.css" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%231d2b53'/%3E%3Crect x='4' y='2' width='8' height='7' fill='%23ff77a8'/%3E%3Crect x='6' y='4' width='1' height='1' fill='%231d2b53'/%3E%3Crect x='9' y='4' width='1' height='1' fill='%231d2b53'/%3E%3Crect x='5' y='10' width='6' height='2' fill='%2300e436'/%3E%3C/svg%3E"
+    />
+  </head>
+  <body>
+    <main id="app">
+      <div class="crt">
+        <div class="screen">
+          <div class="picture">
+            <canvas id="scene" aria-label="Cena 3D da estação orbital com o personagem"></canvas>
+          </div>
+
+          <div class="vignette" aria-hidden="true"></div>
+          <div class="danger" aria-hidden="true"></div>
+          <div class="grain" aria-hidden="true"></div>
+          <div class="chroma" aria-hidden="true"></div>
+          <div class="drop" aria-hidden="true"></div>
+          <div class="track" aria-hidden="true"></div>
+          <div class="head" aria-hidden="true"></div>
+
+          <div class="ui-layer">
+            <button id="interact" class="prompt" type="button" aria-label="interagir (N ou RT)">
+              <span class="prompt-glyph" aria-hidden="true"></span>
+              <span class="prompt-key" aria-hidden="true">N / RT</span>
+            </button>
+            <div id="menu" class="menu" role="dialog" aria-modal="true" aria-label="interface" aria-hidden="true">
+              <button id="menu-close" class="menu-close" type="button" aria-label="fechar">×</button>
+            </div>
+          </div>
+
+          <div id="loader" class="loader" role="status" aria-live="polite">
+            <p class="loader-text">Loading<span class="loader-dots" aria-hidden="true"><i></i><i></i><i></i></span></p>
+          </div>
+
+        </div>
+      </div>
+
+      <div id="debug" class="debug" aria-hidden="true">
+        <div class="debug-group">
+          <span class="debug-label">pos</span>
+          <span id="coords" class="debug-value">X 0.00   Y 0.00   Z 0.00</span>
+        </div>
+        <div class="debug-group">
+          <span class="debug-label">fps</span>
+          <span id="fps" class="debug-value">--</span>
+        </div>
+      </div>
+
+      <aside id="editor" class="editor" hidden>
+        <div class="editor-head">
+          <strong>gizmos</strong>
+          <span>arraste os cantos</span>
+        </div>
+        <canvas
+          id="editor-map"
+          class="editor-map"
+          width="220"
+          height="260"
+          aria-label="Mapa das áreas para edição"
+        ></canvas>
+        <pre id="editor-json" class="editor-json" tabindex="0"></pre>
+        <div class="editor-row">
+          <button id="editor-copy" type="button">copiar JSON</button>
+          <button id="editor-save" type="button">salvar</button>
+          <button id="editor-reset" type="button">resetar</button>
+        </div>
+        <p id="editor-status" class="editor-status">pronto</p>
+      </aside>
+
+      <aside id="rig-editor" class="rig-editor" hidden>
+        <div class="editor-head">
+          <strong>rig</strong>
+          <span>arraste e copie</span>
+        </div>
+        <details class="rig-section" open>
+          <summary>rig · juntas</summary>
+          <label class="rig-toggle">
+            <input id="rig-manual" type="checkbox" />
+            posar manualmente
+          </label>
+          <div id="rig-sliders" class="rig-sliders"></div>
+          <pre id="rig-json" class="editor-json" tabindex="0"></pre>
+          <div class="editor-row">
+            <button id="rig-copy" type="button">copiar JSON</button>
+            <button id="rig-reset" type="button">resetar</button>
+          </div>
+        </details>
+        <details class="rig-section">
+          <summary>
+            lifecycle · chamadas
+            <span id="trace-count">0</span>
+          </summary>
+          <pre id="trace-log" class="trace-log"></pre>
+        </details>
+        <p id="rig-status" class="editor-status">pronto</p>
+      </aside>
+
+      <div id="caught" class="caught" aria-hidden="true"></div>
+
+      <div id="fatal" class="fatal" hidden>
+        <div class="loader-card">
+          <h2>opa!</h2>
+          <p id="fatal-message">Não foi possível iniciar o WebGL neste navegador.</p>
+        </div>
+      </div>
+    </main>
+
+    <svg class="crt-defs" width="0" height="0" aria-hidden="true">
+      <clipPath id="tube" clipPathUnits="objectBoundingBox">
+        <path d="M.075 .026Q.5 -.016 .925 .026Q.968 .03 .972 .085Q1.018 .5 .972 .915Q.968 .97 .925 .974Q.5 1.016 .075 .974Q.032 .97 .028 .915Q-.018 .5 .028 .085Q.032 .03 .075 .026Z"/>
+      </clipPath>
+    </svg>
+
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "/node_modules/three/build/three.module.js",
+          "three/addons/": "/node_modules/three/examples/jsm/"
+        }
+      }
+    </script>
+    <script type="module" src="./src/main.js"></script>
+  </body>
+</html>

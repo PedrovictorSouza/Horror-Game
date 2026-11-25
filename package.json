@@ -1,0 +1,16 @@
+{
+  "name": "pico-walker",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "node server.mjs",
+    "start": "node server.mjs",
+    "test": "node --test test/*.test.js",
+    "build:itch": "node tools/build-itch.mjs"
+  },
+  "dependencies": {
+    "three": "0.180.0"
+  },
+  "description": "Low-poly browser horror game: orbital station, fixed cameras, a shadow that follows you (three.js)."
+}
